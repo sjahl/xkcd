@@ -4,8 +4,12 @@ require 'net/http'
 require 'json'
 
 class XkcdImage
-  def self.img
-    json_url = 'http://xkcd.com/info.0.json'
+  def self.img(num = 0)
+    if num == 0
+      json_url = "http://xkcd.com/info.0.json"
+    else
+      json_url = "http://xkcd.com/#{num}/info.0.json"
+    end
     response = Net::HTTP.get_response( URI.parse(json_url) )
     raise "there was an error: #{response.code}" unless response.code == "200"
     le_json  = JSON.parse( response.body )
@@ -13,7 +17,7 @@ class XkcdImage
   end
 
   def self.save( img, dir )
-    `curl -Oo #{dir} #{img}`
+    `cd #{dir} && curl -O #{img}`
   end
 end
 
