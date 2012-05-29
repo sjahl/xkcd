@@ -4,7 +4,7 @@ require 'net/http'
 require 'json'
 
 class XkcdImage
-  def self.img(num = 0) # num is the id number of the comic
+  def self.img(num = 0) # num is the id number of the comic, 0 is today's comic
     if num == 0
       json_url = "http://xkcd.com/info.0.json"
     else
